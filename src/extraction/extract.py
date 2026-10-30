@@ -113,7 +113,8 @@ PROPOSAL_SCHEMA: dict[str, Any] = _obj({
     },
     "new_activities": {
         "type": "array",
-        "description": "Assessments described in a document but absent from the record.",
+        "description": "Assessments described in a document but absent from the "
+                       "activity arrays, exams and on-site assessments included.",
         "items": _obj({
             "type": {"type": "string", "enum": list(EXTRACT_ACTIVITY_ARRAYS)},
             "name": {"type": "string"},
@@ -339,7 +340,8 @@ class FieldExtractor:
         return grouped
 
     def _fingerprints(self, screening: dict[str, Any]) -> dict[int, str]:
-        """Hash each course's relevant content, together with the model settings.
+        """Hash each course's relevant content, together with the model settings
+        and the prompt, so a prompt change re-extracts every course.
 
         A course with a relevant document that has no ``sha256`` gets no
         fingerprint, so it is never reused.
@@ -353,7 +355,8 @@ class FieldExtractor:
         out = {}
         for course_id, values in hashes.items():
             if all(values):
-                key = json.dumps([self.model, self.effort, sorted(values)])
+                key = json.dumps([self.model, self.effort, EXTRACT_SYSTEM_PROMPT,
+                                  PROPOSAL_SCHEMA, sorted(values)])
                 out[course_id] = hashlib.sha256(key.encode()).hexdigest()
         return out
 

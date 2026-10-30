@@ -460,9 +460,14 @@ Your job is to **add what is missing**. Specifically:
    hand-ins, ...), with its weight as a percentage where one is given.
 3. `mandatory_onsite` -- sessions where physical attendance is required: \
    presentations, lab exams, compulsory excursions.
-4. `new_activities` -- assessments a document describes that are **absent** \
-   from the record. Check the existing names first; if an activity is already \
-   listed, do not propose it again.
+4. `new_activities` -- every assessment a document describes that is \
+   **absent** from the record's activity arrays (`assignments`, `quizzes`, \
+   `workshops`, `lessons`). This includes **every exam** and every \
+   assessment that also appears in `grading` or `mandatory_onsite`: being \
+   graded or held on site does not stop it being work the student must do, \
+   so list it here as well. Propose exams, presentations, projects and \
+   hand-ins with type `assign`. Check the existing activity names first; if \
+   an activity is already listed there, do not propose it again.
 5. `enrichments` -- values for fields that are `null` in the record, keyed by \
    the activity's `cmid`.
 
